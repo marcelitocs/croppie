@@ -1224,6 +1224,22 @@
             dHeight = (sHeight / height) * canvasHeight;
         }
 
+        // Centers and cuts the image to maintain the aspect ratio
+        if (Math.round(sWidth / sHeight * 100) !== Math.round(dWidth / dHeight * 100)) {
+            var sRatio = sWidth / sHeight;
+            var dRatio = dWidth / dHeight;
+
+            if (sRatio > dRatio) {
+                var idealWidth = dHeight * sRatio;
+                dx -= (idealWidth - dWidth) / 2;
+                dWidth = idealWidth;
+            } else {
+                var idealHeight = dWidth / sRatio;
+                dy -= (idealHeight - dHeight) / 2;
+                dHeight = idealHeight;
+            }
+        }
+
         // console.table({ left, right, top, bottom, canvasWidth, canvasHeight, width, height, startX, startY, circle, sx, sy, dx, dy, sWidth, sHeight, dWidth, dHeight });
 
         ctx.drawImage(this.elements.preview, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
